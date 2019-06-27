@@ -10,6 +10,8 @@
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
 
+// -----> Interface
+
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
 // Table view
@@ -18,7 +20,13 @@
 // Movies array global variable - available in other files
 @property (strong, nonatomic) NSArray *movies;
 
+// Refresh control
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+
 @end
+
+
+// -----> Implementation
 
 @implementation MoviesViewController
 
@@ -31,6 +39,25 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    // So when the view loads, it fetches the movies
+    [self fetchMovies];
+    
+    // Instantiate object
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    // Add refresh control to table view - do this since the refresh control is designed to work with the scroll view (tracks how much user scrolls)
+    [self.refreshControl
+     addTarget:self
+     action:@selector(fetchMovies)
+     forControlEvents:UIControlEventValueChanged
+    ];
+    // [self.tableView addSubview:self.refreshControl];
+    // So it appears on the back of the table view
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+}
+
+
+// Method that fetches movies - stores movies in an array
+- (void)fetchMovies {
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
@@ -41,7 +68,7 @@
         else {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            // Saves dictionalry to movies array
+            // Saves the movies fetched from the API to movies array - which is declared as a property above
             self.movies = dataDictionary[@"results"];
             // To display all the movies array -- NSLog(@"%@", dataDictionary);
             
@@ -51,15 +78,15 @@
             }
             
             // Method that calls data source methods again
+            // Allows the app to be up to date - reloads our table view data
             [self.tableView reloadData];
             
-            // TODO: Get the array of movies
-            // TODO: Store the movies in a property to use elsewhere
-            // TODO: Reload your table view data
         }
+        
+        [self.refreshControl endRefreshing];
+        
     }];
     [task resume];
-    
 }
 
 
