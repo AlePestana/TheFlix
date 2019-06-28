@@ -9,6 +9,7 @@
 #import "MoviesViewController.h"
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "DetailsViewController.h"
 
 // -----> Interface
 
@@ -130,15 +131,34 @@
 }
 
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
+// Special function called automatically
+// Leave view controller and go to another screen
+// Lifecycle method that asks if there's anything that needs to be sent to the destination view controller - in this case, the movie the user wants to see the details of (the one he clicks)
+// Even though there's no id involved in the function, the sender sends the table view cell that got tapped on
+// Sender = object that fired an event
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     
+     // Asks the table view to return the index path of the object I send it
+     UITableViewCell *tappedCell = sender;
+     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+     NSDictionary *movie = self.movies[indexPath.row];
+     
+     // View controller that's going to be shown
+     DetailsViewController *detailsViewController = [segue destinationViewController];
+        // Set public movie property to the movie
+        // Passes movie that was tapped
+     detailsViewController.movie = movie;
+     
+     
+     
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
  }
- */
+ 
 
 
 @end
