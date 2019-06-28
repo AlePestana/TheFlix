@@ -7,6 +7,7 @@ target 'TheFlix' do
 
   # Pods for TheFlix
 	pod 'AFNetworking'
+	pod 'SystemConfiguration'
 
   target 'TheFlixTests' do
     inherit! :search_paths

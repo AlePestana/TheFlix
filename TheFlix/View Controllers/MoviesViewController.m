@@ -24,6 +24,9 @@
 // Refresh control
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
+// Activity indicator
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end
 
 
@@ -36,13 +39,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    // --------------------------> Activity indicator
+        // Activity indicator
+    [self.activityIndicator startAnimating];
+    // --------------------------> Activity indicator
+
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     // So when the view loads, it fetches the movies
     [self fetchMovies];
-    
+
     // Instantiate object
     self.refreshControl = [[UIRefreshControl alloc] init];
     // Add refresh control to table view - do this since the refresh control is designed to work with the scroll view (tracks how much user scrolls)
@@ -65,6 +74,35 @@
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             NSLog(@"%@", [error localizedDescription]);
+            // --------------------------> Alert controller
+            // Alert controller setup
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Network Error" message:@"Check your internet connection and please try again later." preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            // Cancel action
+           /*
+            
+            // create a cancel action
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                 // handle cancel response here. Doing nothing will dismiss the view.
+            }];
+            
+            // add the cancel action to the alertController
+            [alert addAction:cancelAction];
+            
+            */
+            
+            // create an OK action
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                // handle response here.
+                [self fetchMovies];
+           }];
+            
+            // add the OK action to the alert controller
+            [alert addAction:okAction];
+            
+            [self presentViewController:alert animated:YES completion:^{}];
+            // --------------------------> Alert controller
+            
         }
         else {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -74,9 +112,10 @@
             // To display all the movies array -- NSLog(@"%@", dataDictionary);
             
             // Iterates through movies array and displays their title on the console
-            for (NSDictionary *movie in self.movies) {
+            /* for (NSDictionary *movie in self.movies) {
                 NSLog(@"%@", movie[@"title"]);
             }
+             */
             
             // Method that calls data source methods again
             // Allows the app to be up to date - reloads our table view data
@@ -85,6 +124,10 @@
         }
         
         [self.refreshControl endRefreshing];
+        // Everything was uploaded
+        // --------------------------> Activity indicator
+        [self.activityIndicator stopAnimating];
+        // --------------------------> Activity indicator
         
     }];
     [task resume];
