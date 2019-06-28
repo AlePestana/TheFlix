@@ -9,6 +9,7 @@
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
 
+// -----> Interface
 @interface DetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *backdropView;
@@ -20,6 +21,8 @@
 
 @end
 
+
+// -----> Implementation
 @implementation DetailsViewController
 
 - (void)viewDidLoad {

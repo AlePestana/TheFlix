@@ -12,7 +12,6 @@
 #import "DetailsViewController.h"
 
 // -----> Interface
-
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
 // Table view
@@ -31,7 +30,6 @@
 
 
 // -----> Implementation
-
 @implementation MoviesViewController
 
 
@@ -77,19 +75,6 @@
             // --------------------------> Alert controller
             // Alert controller setup
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Network Error" message:@"Check your internet connection and please try again later." preferredStyle:(UIAlertControllerStyleAlert)];
-            
-            // Cancel action
-           /*
-            
-            // create a cancel action
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                 // handle cancel response here. Doing nothing will dismiss the view.
-            }];
-            
-            // add the cancel action to the alertController
-            [alert addAction:cancelAction];
-            
-            */
             
             // create an OK action
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

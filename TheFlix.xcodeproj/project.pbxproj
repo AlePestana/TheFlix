@@ -21,6 +21,7 @@
 		F9087B6922C4B52300DA6CC2 /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9087B6822C4B52300DA6CC2 /* MovieCell.m */; };
 		F9087B6C22C596E800DA6CC2 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9087B6B22C596E800DA6CC2 /* DetailsViewController.m */; };
 		F9D88FB922C61504006788B5 /* MoviesGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D88FB822C61504006788B5 /* MoviesGridViewController.m */; };
+		F9D88FBC22C6BB69006788B5 /* MovieCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D88FBB22C6BB69006788B5 /* MovieCollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		F9087B6B22C596E800DA6CC2 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		F9D88FB722C61504006788B5 /* MoviesGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoviesGridViewController.h; sourceTree = "<group>"; };
 		F9D88FB822C61504006788B5 /* MoviesGridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviesGridViewController.m; sourceTree = "<group>"; };
+		F9D88FBA22C6BB69006788B5 /* MovieCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieCollectionCell.h; sourceTree = "<group>"; };
+		F9D88FBB22C6BB69006788B5 /* MovieCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieCollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +203,8 @@
 			children = (
 				F9087B6722C4B52300DA6CC2 /* MovieCell.h */,
 				F9087B6822C4B52300DA6CC2 /* MovieCell.m */,
+				F9D88FBA22C6BB69006788B5 /* MovieCollectionCell.h */,
+				F9D88FBB22C6BB69006788B5 /* MovieCollectionCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -434,6 +439,7 @@
 				F9087B3F22C4174800DA6CC2 /* main.m in Sources */,
 				F9087B6C22C596E800DA6CC2 /* DetailsViewController.m in Sources */,
 				F9087B3122C4174800DA6CC2 /* AppDelegate.m in Sources */,
+				F9D88FBC22C6BB69006788B5 /* MovieCollectionCell.m in Sources */,
 				F9087B6922C4B52300DA6CC2 /* MovieCell.m in Sources */,
 				F9087B6322C4484C00DA6CC2 /* MoviesViewController.m in Sources */,
 				F9D88FB922C61504006788B5 /* MoviesGridViewController.m in Sources */,
