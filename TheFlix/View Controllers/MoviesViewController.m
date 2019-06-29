@@ -44,12 +44,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = item;
+    self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
 
     // --------------------------> Activity indicator
         // Activity indicator
     [self.activityIndicator startAnimating];
     // --------------------------> Activity indicator
-
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -172,8 +174,28 @@
     cell.posterView.image = nil;
     
     // Use method defined in AFNetworking class - managed using Cocoa Pods
-    [cell.posterView setImageWithURL:posterURL];
-    
+    // [cell.posterView setImageWithURL:posterURL];
+    NSURL *url = [NSURL URLWithString:completePosterURLString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [cell.posterView setImageWithURLRequest:request placeholderImage:nil
+                                    success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image){
+       // imageResponse will be nil if the image is cached
+       if (imageResponse) {
+           NSLog(@"Image was NOT cached, fade in image");
+           cell.posterView.alpha = 0.0;
+           cell.posterView.image = image;
+                                            
+           //Animate UIImageView back to alpha 1 over 0.3sec
+           [UIView animateWithDuration:0.3 animations:^{cell.posterView.alpha = 1.0;
+                                            }];
+           } else {
+            NSLog(@"Image was cached so just update the image");
+            cell.posterView.image = image;
+             }
+            }
+            failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+            // do something for the failure condition
+            }];
     
     return cell;
 }

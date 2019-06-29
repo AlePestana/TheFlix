@@ -2,7 +2,7 @@
 
 **TheFlix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -17,22 +17,18 @@ The following **optional** features are implemented:
 
 - [x] User sees an error message when there's a networking error.
 - [x] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
-- [ ] User can view the large movie poster by tapping on a cell.
+- [x] User can search for a movie.
+- [x] All images fade in as they are loading.
+- [x] User can view the large movie poster by tapping on a cell (see its details in another screen).
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [x] Customize the selection effect of the cell.
-- [ ] Customize the navigation bar.
+- [x] Customize the navigation bar.
 - [x] Customize the UI.
-
-The following **additional** features are implemented:
-
-- [x] User can tap a movie and see its details in another screen.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Find new ways to add cells of different shapes.
+2. Understand the logic behind the search bar.
 
 ## Video Walkthrough
 
@@ -44,7 +40,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Encountered some challenges adding the search bar because of the difference between the filtered data array and the movies array.
 
 ## Credits
 
