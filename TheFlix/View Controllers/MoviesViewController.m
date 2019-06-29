@@ -12,7 +12,7 @@
 #import "DetailsViewController.h"
 
 // -----> Interface
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 // Table view
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +25,13 @@
 
 // Activity indicator
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+// Search bar
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+// Filtered data
+@property (strong, nonatomic) NSArray *filteredData;
+
 
 @end
 
@@ -46,6 +53,9 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.searchBar.delegate = self;
+    
+    self.filteredData = self.movies;
     
     // So when the view loads, it fetches the movies
     [self fetchMovies];
@@ -105,6 +115,8 @@
             // Method that calls data source methods again
             // Allows the app to be up to date - reloads our table view data
             [self.tableView reloadData];
+            self.filteredData = self.movies;
+            
             
         }
         
@@ -126,6 +138,9 @@
 
 // Method that returns the number of stories to display
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.filteredData != nil) {
+        return self.filteredData.count;
+    }
     return self.movies.count;
 }
 
@@ -136,7 +151,12 @@
     
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie;
+    if (self.filteredData != nil) {
+        movie = self.filteredData[indexPath.row];
+    } else {
+        movie = self.movies[indexPath.row];
+    }
     // Assign objects displayed on screen the corresponding values from the movies array
     cell.titleLabel.text = movie[@"title"];
     cell.synopsisLabel.text = movie[@"overview"];
@@ -156,6 +176,38 @@
     
     
     return cell;
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            NSString *movieName = evaluatedObject[@"original_title"];
+            return [movieName containsString:searchText];
+        }];
+        self.filteredData = [self.movies filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredData);
+        
+    }
+    else {
+        self.filteredData = self.movies;
+    }
+    
+    [self.tableView reloadData];
+    
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
 }
 
 
